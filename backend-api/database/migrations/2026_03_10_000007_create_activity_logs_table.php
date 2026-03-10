@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('action');
             $table->text('details');
             $table->enum('type', ['transaction', 'activity']);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

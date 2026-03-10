@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('borrow_record_id')->constrained('borrow_records')->cascadeOnDelete();
             $table->foreignId('item_id')->constrained('items')->cascadeOnDelete();
-            $table->integer('quantity')->default(1);
+            $table->unsignedInteger('quantity')->default(1);
+            
+            $table->unique(['borrow_record_id', 'item_id']);
         });
     }
 

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('borrow_records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
-            $table->foreignId('staff_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('student_id')->constrained('students')->restrictOnDelete();
+            $table->foreignId('staff_id')->constrained('users')->restrictOnDelete();
             $table->string('collateral');
             $table->dateTime('borrowed_at');
             $table->dateTime('due_at');

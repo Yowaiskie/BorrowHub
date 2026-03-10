@@ -77,6 +77,7 @@ erDiagram
         string action
         text details
         enum type
+        datetime created_at
     }
 ```
 

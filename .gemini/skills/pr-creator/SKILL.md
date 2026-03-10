@@ -43,6 +43,7 @@ Create a PR description that strictly follows the template's structure.
 - **Checklists**: Review each item. Mark with `[x]` if completed. If an item is not applicable, leave it as `[ ]`. Do not check boxes for tasks you haven't verified.
 - **Content**: Fill in the sections with clear, concise summaries of the changes made, focusing on the *why* and *what*.
 - **Related Issues**: Link any issues fixed or related to this PR (e.g., "Closes #4").
+- **Drafting File**: **REQUIRED:** Write the drafted description to a temporary file inside the `docs/` directory (e.g., `docs/PR_DRAFT.md`) so the user can easily copy and paste it.
 
 ### 6. Push Branch
 Push the current branch to the remote repository.
@@ -55,15 +56,13 @@ git push -u origin HEAD
 ```
 
 ### 7. Create PR
-Use the `gh` CLI to create the PR. To avoid shell escaping issues with multi-line Markdown, write the drafted description to a temporary file first.
+Use the `gh` CLI to create the PR.
 ```bash
-# 1. Write the drafted description to a temporary file (e.g., /tmp/pr-body.md)
-# 2. Create the PR using the --body-file flag
-gh pr create --title "type(scope): succinct description" --body-file /tmp/pr-body.md
-# 3. Remove the temporary file
-rm /tmp/pr-body.md
+# Create the PR using the --body-file flag pointing to the draft in docs/
+gh pr create --title "type(scope): succinct description" --body-file docs/PR_DRAFT.md
 ```
 - **Title**: Ensure the title follows the [Conventional Commits](https://www.conventionalcommits.org/) format (e.g., `feat: Add user management`, `fix(api): Resolve data type mismatch`).
+- **Cleanup**: After the PR is created, ask the user if they want to delete the draft file in `docs/`.
 
 ## Principles
 - **Safety First**: NEVER commit or push to `main` or `master`. This is your absolute highest priority. Always branch off first.

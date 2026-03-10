@@ -106,3 +106,4 @@ Unified audit trail for both system activities and transaction history.
 | `type` | enum | No | | `transaction`, `activity` (used for tab filtering in the UI) |
 | `created_at` | timestamp | Yes | | Timestamp of the event |
 
+
