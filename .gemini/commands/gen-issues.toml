@@ -1,0 +1,6 @@
+description = "Generate GitHub issues for a specific module from features.md"
+prompt = """
+Let's create github issues (deliverable tasks) that satisfies the '{{args}}' section in @borrowhub-prototype/docs/features.md. 
+Don't forget to include test file as one of the task's deliverables only if applicable, 
+and always use github-issue-creator-skill.
+"""
