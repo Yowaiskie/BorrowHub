@@ -23,12 +23,18 @@ class ItemRepository implements ItemRepositoryInterface
             $query->where('status', $filters['status']);
         }
 
-        return $query->paginate(15);
+        return $query->paginate(config('borrow.pagination_size', 15));
     }
 
-    public function findById($id)
+    public function findById($id, bool $lock = false)
     {
-        return Item::with('category')->findOrFail($id);
+        $query = Item::with('category');
+
+        if($lock) {
+            $query->lockForUpdate();
+        }
+
+        return $query->findOrFail($id);
     }
 
     public function create(array $data)
@@ -49,4 +55,19 @@ class ItemRepository implements ItemRepositoryInterface
         $item = $this->findById($id);
         return $item->delete();
     }
+
+    public function decrementAvailableQuantity(int $id, int $quantity)
+    {
+        $item = Item::findOrFail($id);
+        $item->decrement('available_quantity', $quantity);
+        return $item;
+    }
+
+    public function incrementAvailableQuantity(int $id, int $quantity)
+    {
+        $item = Item::findOrFail($id);
+        $item->increment('available_quantity', $quantity);
+        return $item;
+    }
+
 }
