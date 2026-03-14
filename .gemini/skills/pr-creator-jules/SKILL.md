@@ -27,6 +27,7 @@ Follow these steps strictly to create a Pull Request:
 Verify that all intended changes are properly staged and committed.
 - Check for unstaged or uncommitted changes.
 - If there are uncommitted changes, stage and commit them with a descriptive message following Conventional Commits format (`type(scope): description`).
+- **CRITICAL:** Ensure temporary files like `docs/PR_DRAFT.md` are NOT staged or committed.
 - **NEVER** commit directly to `main` or `master`.
 
 ### 3. Locate Template
@@ -44,6 +45,7 @@ Create a PR description that strictly follows the template's structure.
 - **Checklists**: Review each item. Mark with `[x]` if completed. If an item is not applicable, leave it as `[ ]`. Do not check boxes for tasks you haven't verified.
 - **Content**: Fill in the sections with clear, concise summaries of the changes made, focusing on the *why* and *what*.
 - **Related Issues**: Link any issues fixed or related to this PR (e.g., "Closes #4").
+- **Drafting File (Optional)**: If you write the drafted description to a file (e.g., `docs/PR_DRAFT.md`), you MUST NOT stage or commit this file. It is for reference only.
 
 ### 6. Push Branch
 Push the current branch to the remote repository.
