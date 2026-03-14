@@ -7,29 +7,22 @@ public class RecentTransactionDTO {
     @SerializedName("id")
     private int id;
 
-    @SerializedName("item_name")
-    private String itemName;
-
     @SerializedName("status")
     private String status;
 
-    @SerializedName("date")
-    private String date;
+    @SerializedName("borrowed_at")
+    private String borrowedAt;
 
     // Getters
     public int getId() {
         return id;
     }
 
-    public String getItemName() {
-        return itemName;
-    }
-
     public String getStatus() {
         return status;
     }
 
-    public String getDate() {
-        return date;
+    public String getBorrowedAt() {
+        return borrowedAt;
     }
 }

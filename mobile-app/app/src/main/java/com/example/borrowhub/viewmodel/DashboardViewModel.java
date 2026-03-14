@@ -15,6 +15,7 @@ import com.example.borrowhub.data.local.entity.RecentTransactionEntity;
 import com.example.borrowhub.data.remote.ApiClient;
 import com.example.borrowhub.repository.DashboardRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardViewModel extends AndroidViewModel {
@@ -37,17 +38,17 @@ public class DashboardViewModel extends AndroidViewModel {
         );
 
         dashboardStats = Transformations.switchMap(tokenLiveData, token -> {
-            if (token != null) {
+            if (token != null && !token.isEmpty()) {
                 return repository.getDashboardStats(token);
             }
-            return new MutableLiveData<>();
+            return new MutableLiveData<>(new DashboardStatsEntity(0, 0, 0, 0));
         });
 
         recentTransactions = Transformations.switchMap(tokenLiveData, token -> {
-            if (token != null) {
+            if (token != null && !token.isEmpty()) {
                 return repository.getRecentTransactions(token);
             }
-            return new MutableLiveData<>();
+            return new MutableLiveData<>(new ArrayList<>());
         });
 
         fetchData();
@@ -60,17 +61,17 @@ public class DashboardViewModel extends AndroidViewModel {
         this.sessionManager = sessionManager;
 
         dashboardStats = Transformations.switchMap(tokenLiveData, token -> {
-            if (token != null) {
+            if (token != null && !token.isEmpty()) {
                 return repository.getDashboardStats(token);
             }
-            return new MutableLiveData<>();
+            return new MutableLiveData<>(new DashboardStatsEntity(0, 0, 0, 0));
         });
 
         recentTransactions = Transformations.switchMap(tokenLiveData, token -> {
-            if (token != null) {
+            if (token != null && !token.isEmpty()) {
                 return repository.getRecentTransactions(token);
             }
-            return new MutableLiveData<>();
+            return new MutableLiveData<>(new ArrayList<>());
         });
 
         fetchData();

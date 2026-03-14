@@ -7,15 +7,17 @@ import androidx.room.PrimaryKey;
 public class DashboardStatsEntity {
 
     @PrimaryKey
-    public int id = 1; // Assuming only one record for stats
+    public int id = 1;
 
-    public int totalBorrowed;
-    public int activeRequests;
-    public int overdueItems;
+    public int totalItems;
+    public int currentlyBorrowed;
+    public int availableNow;
+    public int dueToday;
 
-    public DashboardStatsEntity(int totalBorrowed, int activeRequests, int overdueItems) {
-        this.totalBorrowed = totalBorrowed;
-        this.activeRequests = activeRequests;
-        this.overdueItems = overdueItems;
+    public DashboardStatsEntity(int totalItems, int currentlyBorrowed, int availableNow, int dueToday) {
+        this.totalItems = totalItems;
+        this.currentlyBorrowed = currentlyBorrowed;
+        this.availableNow = availableNow;
+        this.dueToday = dueToday;
     }
 }

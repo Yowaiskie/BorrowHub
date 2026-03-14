@@ -53,9 +53,9 @@ public class DashboardActivity extends AppCompatActivity {
     private void observeViewModel() {
         viewModel.getDashboardStats().observe(this, stats -> {
             if (stats != null) {
-                binding.tvTotalBorrowedValue.setText(String.valueOf(stats.totalBorrowed));
-                binding.tvActiveRequestsValue.setText(String.valueOf(stats.activeRequests));
-                binding.tvOverdueItemsValue.setText(String.valueOf(stats.overdueItems));
+                binding.tvTotalBorrowedValue.setText(String.valueOf(stats.totalItems));
+                binding.tvActiveRequestsValue.setText(String.valueOf(stats.currentlyBorrowed));
+                binding.tvOverdueItemsValue.setText(String.valueOf(stats.dueToday));
             }
         });
 

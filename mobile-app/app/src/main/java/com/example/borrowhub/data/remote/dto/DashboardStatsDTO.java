@@ -4,25 +4,32 @@ import com.google.gson.annotations.SerializedName;
 
 public class DashboardStatsDTO {
 
-    @SerializedName("total_borrowed")
-    private int totalBorrowed;
+    @SerializedName("total_items")
+    private int totalItems;
 
-    @SerializedName("active_requests")
-    private int activeRequests;
+    @SerializedName("currently_borrowed")
+    private int currentlyBorrowed;
 
-    @SerializedName("overdue_items")
-    private int overdueItems;
+    @SerializedName("available_now")
+    private int availableNow;
+
+    @SerializedName("due_today")
+    private int dueToday;
 
     // Getters
-    public int getTotalBorrowed() {
-        return totalBorrowed;
+    public int getTotalItems() {
+        return totalItems;
     }
 
-    public int getActiveRequests() {
-        return activeRequests;
+    public int getCurrentlyBorrowed() {
+        return currentlyBorrowed;
     }
 
-    public int getOverdueItems() {
-        return overdueItems;
+    public int getAvailableNow() {
+        return availableNow;
+    }
+
+    public int getDueToday() {
+        return dueToday;
     }
 }

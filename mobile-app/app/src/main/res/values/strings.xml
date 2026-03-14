@@ -15,9 +15,9 @@
 
     <string name="dashboard_title">Dashboard</string>
     <string name="dashboard_subtitle">Overview of resource management</string>
-    <string name="dashboard_total_borrowed">Total Borrowed</string>
-    <string name="dashboard_active_requests">Active Requests</string>
-    <string name="dashboard_overdue_items">Overdue Items</string>
+    <string name="dashboard_total_items">Total Items</string>
+    <string name="dashboard_currently_borrowed">Currently Borrowed</string>
+    <string name="dashboard_due_today">Due Today</string>
     <string name="dashboard_quick_actions">Quick Actions</string>
     <string name="dashboard_borrow_return">Borrow / Return</string>
     <string name="dashboard_borrow_return_desc">Process transactions</string>

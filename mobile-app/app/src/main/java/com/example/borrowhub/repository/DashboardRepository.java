@@ -35,14 +35,18 @@ public class DashboardRepository {
     }
 
     public LiveData<DashboardStatsEntity> getDashboardStats(String token) {
-        // Fetch from remote and update local cache
-        apiService.getDashboardStats("Bearer " + token).enqueue(new Callback<DashboardStatsDTO>() {
+        apiService.getDashboardStats(token).enqueue(new Callback<DashboardStatsDTO>() {
             @Override
             public void onResponse(Call<DashboardStatsDTO> call, Response<DashboardStatsDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     DashboardStatsDTO dto = response.body();
                     executorService.execute(() -> {
-                        DashboardStatsEntity entity = new DashboardStatsEntity(dto.getTotalBorrowed(), dto.getActiveRequests(), dto.getOverdueItems());
+                        DashboardStatsEntity entity = new DashboardStatsEntity(
+                            dto.getTotalItems(),
+                            dto.getCurrentlyBorrowed(),
+                            dto.getAvailableNow(),
+                            dto.getDueToday()
+                        );
                         dashboardStatsDao.deleteAll();
                         dashboardStatsDao.insert(entity);
                     });
@@ -51,17 +55,14 @@ public class DashboardRepository {
 
             @Override
             public void onFailure(Call<DashboardStatsDTO> call, Throwable t) {
-                // Log failure, UI will still show cached data via LiveData from DAO
             }
         });
 
-        // Always return the local cache
         return dashboardStatsDao.getDashboardStats();
     }
 
     public LiveData<List<RecentTransactionEntity>> getRecentTransactions(String token) {
-        // Fetch from remote and update local cache
-        apiService.getRecentTransactions("Bearer " + token).enqueue(new Callback<List<RecentTransactionDTO>>() {
+        apiService.getRecentTransactions(token).enqueue(new Callback<List<RecentTransactionDTO>>() {
             @Override
             public void onResponse(Call<List<RecentTransactionDTO>> call, Response<List<RecentTransactionDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -69,7 +70,12 @@ public class DashboardRepository {
                     executorService.execute(() -> {
                         List<RecentTransactionEntity> entityList = new ArrayList<>();
                         for (RecentTransactionDTO dto : dtoList) {
-                            entityList.add(new RecentTransactionEntity(dto.getId(), dto.getItemName(), dto.getStatus(), dto.getDate()));
+                            entityList.add(new RecentTransactionEntity(
+                                dto.getId(),
+                                "Transaction #" + dto.getId(),
+                                dto.getStatus(),
+                                dto.getBorrowedAt()
+                            ));
                         }
                         recentTransactionDao.deleteAll();
                         recentTransactionDao.insertAll(entityList);
@@ -79,11 +85,9 @@ public class DashboardRepository {
 
             @Override
             public void onFailure(Call<List<RecentTransactionDTO>> call, Throwable t) {
-                 // Log failure, UI will still show cached data via LiveData from DAO
             }
         });
 
-        // Always return the local cache
         return recentTransactionDao.getRecentTransactions();
     }
 }
