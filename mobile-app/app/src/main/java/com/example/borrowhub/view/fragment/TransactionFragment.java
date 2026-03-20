@@ -17,16 +17,16 @@ import com.google.android.material.tabs.TabLayout;
 
 public class TransactionFragment extends Fragment {
 
-    private static final String TAG_BORROW = "borrow_fragment";
+    private static final int TAB_BORROW = 0;
+    private static final int TAB_RETURN = 1;
 
     private FragmentTransactionBinding binding;
     private TransactionViewModel viewModel;
-    private BorrowItemFragment borrowFragment;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentTransactionBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -35,37 +35,27 @@ public class TransactionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Initialize ViewModel
         viewModel = new ViewModelProvider(this).get(TransactionViewModel.class);
 
         setupTabs();
+
+        // Default to Borrow tab
+        if (savedInstanceState == null) {
+            showTab(TAB_BORROW);
+        }
     }
 
     private void setupTabs() {
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.transaction_tab_borrow));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.transaction_tab_return));
+        binding.tabLayoutTransaction.addTab(
+                binding.tabLayoutTransaction.newTab().setText(R.string.transaction_tab_borrow));
+        binding.tabLayoutTransaction.addTab(
+                binding.tabLayoutTransaction.newTab().setText(R.string.transaction_tab_return));
 
-        // Re-use an existing fragment instance after configuration change, or create a new one
-        borrowFragment = (BorrowItemFragment) getChildFragmentManager()
-                .findFragmentByTag(TAG_BORROW);
-        if (borrowFragment == null) {
-            borrowFragment = new BorrowItemFragment();
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .add(binding.fragmentContainerBorrow.getId(), borrowFragment, TAG_BORROW)
-                    .commit();
-        }
-
-        binding.fragmentContainerBorrow.setVisibility(View.VISIBLE);
-        binding.layoutReturnTab.setVisibility(View.GONE);
-
-        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        binding.tabLayoutTransaction.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 0) {
-                    showBorrowTab();
-                } else {
-                    showReturnTab();
-                }
+                showTab(tab.getPosition());
             }
 
             @Override
@@ -78,14 +68,22 @@ public class TransactionFragment extends Fragment {
         });
     }
 
-    private void showBorrowTab() {
-        binding.fragmentContainerBorrow.setVisibility(View.VISIBLE);
-        binding.layoutReturnTab.setVisibility(View.GONE);
-    }
+    /**
+     * Replaces the content of the transaction container with the appropriate fragment.
+     */
+    private void showTab(int position) {
+        Fragment fragment;
+        if (position == TAB_RETURN) {
+            fragment = new ReturnItemFragment();
+        } else {
+            // BorrowItemFragment is the main borrow workflow implementation
+            fragment = new BorrowItemFragment();
+        }
 
-    private void showReturnTab() {
-        binding.fragmentContainerBorrow.setVisibility(View.GONE);
-        binding.layoutReturnTab.setVisibility(View.VISIBLE);
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.transactionTabContainer, fragment)
+                .commit();
     }
 
     @Override
