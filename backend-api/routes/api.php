@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\ItemController;
 use App\Http\Controllers\Api\V1\DashboardController;
 use App\Http\Controllers\Api\V1\StudentController;
 use App\Http\Controllers\Api\V1\TransactionController;
+use App\Http\Controllers\Api\V1\LogController;
 
 use App\Http\Controllers\Api\V1\UserController;
 
@@ -24,6 +25,8 @@ Route::prefix('v1')->group(function () {
         Route::middleware('role:admin')->group(function () {
             Route::post('/users/{id}/reset-password', [UserController::class, 'resetPassword']);
             Route::apiResource('users', UserController::class);
+            Route::get('/activity-logs', [LogController::class, 'indexActivityLogs']);
+            Route::get('/transaction-logs', [LogController::class, 'indexTransactionLogs']);
         });
 
         Route::get('/dashboard', [DashboardController::class, 'index']);
