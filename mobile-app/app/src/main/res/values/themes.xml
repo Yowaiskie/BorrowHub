@@ -41,7 +41,7 @@
 
     <style name="Widget.App.PopupMenu" parent="Widget.Material3.PopupMenu">
         <item name="android:popupBackground">?attr/colorSurface</item>
-        <item name="android:dropDownSelector">?attr/colorControlHighlight</item>
+        <item name="android:dropDownSelector">?attr/selectableItemBackground</item>
     </style>
 
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">

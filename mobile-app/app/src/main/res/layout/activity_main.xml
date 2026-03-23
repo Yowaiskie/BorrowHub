@@ -21,8 +21,7 @@
             style="@style/Widget.App.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/menu_profile"
-            app:popupTheme="@style/Widget.App.PopupMenu">
+            app:menu="@menu/menu_profile">
 
             <LinearLayout
                 android:layout_width="wrap_content"
