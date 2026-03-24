@@ -79,9 +79,33 @@ public class InventoryViewModelTest {
         when(repository.createItem(any())).thenReturn(new MutableLiveData<>(new ItemRepository.Result<>(new ItemEntity(), null)));
 
         // Act
-        viewModel.addItem("Tablet", "Electronics", 5, 5, "available");
+        viewModel.addItem("Tablet", "Electronics", 5, 5, InventoryConstants.STATUS_AVAILABLE);
 
         // Assert
         verify(repository).createItem(any());
+    }
+
+    @Test
+    public void updateItem_callsRepository() {
+        // Arrange
+        when(repository.updateItem(anyInt(), any())).thenReturn(new MutableLiveData<>(new ItemRepository.Result<>(new ItemEntity(), null)));
+
+        // Act
+        viewModel.updateItem(1L, "Tablet Updated", "Electronics", 7, 6, InventoryConstants.STATUS_AVAILABLE);
+
+        // Assert
+        verify(repository).updateItem(anyInt(), any());
+    }
+
+    @Test
+    public void deleteItem_callsRepository() {
+        // Arrange
+        when(repository.deleteItem(anyInt())).thenReturn(new MutableLiveData<>(new ItemRepository.Result<>(null, null)));
+
+        // Act
+        viewModel.deleteItem(1L);
+
+        // Assert
+        verify(repository).deleteItem(anyInt());
     }
 }
